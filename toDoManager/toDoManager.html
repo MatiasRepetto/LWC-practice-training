@@ -1,0 +1,36 @@
+<template>
+    <lightning-layout>
+        <lightning-layout-item>
+            <div class='time'>{time}</div>
+        </lightning-layout-item>
+        <lightning-layout-item>
+            <div class="greetings">{greetings}</div>
+        </lightning-layout-item>
+
+        <lightning-layout-item>
+            <div class="slds-text-heading_large slds-m-vertical_large">What you would do today?.</div>
+        </lightning-layout-item>
+
+        <lightning-layout>
+            <lightning-layout-item size = "11">
+                <lightning-input type="text" label="Whats in your mind" variant="label-hidden" 
+                placeholder="Whats in your mind"></lightning-input>
+            </lightning-layout-item>
+            <lightning-layout-item size="1">
+                <lightning-button-icon icon-name="utility:add" title="Add task" onclick={addToDoHandler}></lightning-button-icon>
+            </lightning-layout-item>
+        </lightning-layout>
+
+        <lightning-layout-item size="12">
+            <div>Upcoming</div>
+            <template for:each={upComingTasks} for:item="taskItem">
+                <c-task-to-do key={taskItem.taskItemId} task-item-id={taskItem.taskItemId} task-item-name={taskItem.taskItemName}></c-task-to-do>
+            </template>
+
+            <div>Completed</div>
+            <template for:each={completedTasks} for:item="taskItem">
+                <c-task-to-do key={taskItem.taskItemId} task-item-id={taskItem.taskItemId} task-item-name={taskItem.taskItemName} done></c-task-to-do>
+            </template>
+        </lightning-layout-item>
+    </lightning-layout>
+</template>
