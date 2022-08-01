@@ -1,4 +1,6 @@
 import { LightningElement, track } from 'lwc';
+import addTodo from "@salesforce/apex/toDoController.addTodo";
+import getCurrentTodo from "@salesforce/apex/toDoController.addTodo";
 
 export default class ToDoManager extends LightningElement {
     
@@ -11,6 +13,7 @@ export default class ToDoManager extends LightningElement {
     //metodo que se llama ni bien se inicia la coneccion sirve para precargar cosas
     connectedCallback(){ //metodo ciclo de vida
         this.getTime();
+        this.fetchToDos();
 
         //Funcion para hacer llamados a la funcion periodicamente, 
         //esta nos deja actualizar contenido de pagina sin refrescar manualmente 
@@ -45,12 +48,17 @@ export default class ToDoManager extends LightningElement {
     addToDoHandler(){
         const inputBox = this.template.querySelector("lightning-input");
         const taskItem = {
-            taskItemId: this.tasksList.length,
+            //taskItemId: this.tasksList.length,
             taskItemName: inputBox.value,
-            done: false,
-            taskItemDate: new Date()
+            done: false
+            //taskItemDate: new Date()
         }
-        this.tasksList.push(taskItem);
+        addTodo({payload: JSON.stringify(taskItem)}).then( response =>{
+            console.log('Item inserted sucessfully');
+            this.fetchToDos();
+        }).catch( error => {
+            console.error('Error inserting item'+ error);
+        })
         inputBox.value = "";
     }
 
@@ -60,6 +68,17 @@ export default class ToDoManager extends LightningElement {
 
     get completedTasks(){
         return this.taskItem && this.tasksList.length ? this.taskItem.filter( taskItem => taskItem.done): [];
+    }
+
+    //metodo para llamar algo del backend en nuestro caso una clase de apex 
+    fetchToDos(){
+        getCurrentTodo().then(result => {
+            if(result){
+                this.taskItem = result;
+            }
+        }).catch(error => {
+            console.error('Error fetching'+ error);
+        })
     }
 
 }

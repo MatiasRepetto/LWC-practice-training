@@ -5,4 +5,8 @@ export default class TaskToDo extends LightningElement {
     @api taskItemId;
     @api taskItemName;
     @api done = false;
+
+    get containerClass(){
+        return this.done ? "taskToDo completed" : "taskToDo upcoming";
+    }
 }
