@@ -1,0 +1,46 @@
+<template>
+        <lightning-layout-item>
+            <div class="slds-text-heading_large slds-m-vertical_large">Encontraste algo interesante?... .</div>
+        </lightning-layout-item>
+
+        <lightning-layout class="slds-grid_align-space slds-text-heading_small slds-m-vertical_large">
+            <div class="slds-text-heading_small slds-m-vertical_large">
+                <lightning-layout-item size = "11">
+                    <lightning-input id="authorName" type="text" label="authorName" variant="label-hidden" 
+                    placeholder="Nombre del Autor..." onchange={authorNameHandler}></lightning-input>
+                </lightning-layout-item>
+
+                <lightning-layout-item size = "11">
+                    <lightning-input id="pubYear" type="text" label="pubYear" variant="label-hidden" 
+                    placeholder="Ano de publicacion..." onchange={pubYearHandler}></lightning-input>
+                </lightning-layout-item>
+
+
+                <lightning-layout-item size = "11">
+                    <lightning-input id="descNote" type="text" label="descNote" variant="label-hidden" 
+                    placeholder="Motivo de la nota..." onchange={descNoteHandler}></lightning-input>
+                </lightning-layout-item>
+
+                <lightning-layout-item size = "11">
+                    <lightning-input id="mainNote" type="text" label="mainNote" variant="label-hidden" 
+                    placeholder="Escribe la nota..." onchange={mainNoteHandler}></lightning-input>
+                </lightning-layout-item>
+            </div>
+        </lightning-layout>
+
+        <lightning-layout class="slds-grid_align-space">
+            <div class="slds-text-heading_small">
+                <lightning-layout-item size="12">
+                    <lightning-button label="Agregar Nota" onclick={addNotesHandler}>
+                    </lightning-button>
+                </lightning-layout-item>
+            </div>
+        </lightning-layout>
+
+        <lightning-layout-item size="12">
+            <div>Notes</div>
+            <template for:each={savedNotes} for:item="noteItem">
+                <c-note-item key={noteItem.noteId} note-id={noteItem.noteId} note-author={noteItem.aName} note-year={noteItem.pYear} desc-note={noteItem.dNote} main-note={noteItem.mNote} done></c-note-item>
+            </template>
+        </lightning-layout-item>
+</template>
