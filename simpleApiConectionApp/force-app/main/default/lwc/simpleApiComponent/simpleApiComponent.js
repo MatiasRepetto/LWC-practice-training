@@ -2,7 +2,7 @@ import { LightningElement , track } from 'lwc';
 
 export default class SimpleApiComponent extends LightningElement {
 
-    @track chessName ;
+    @track chessName;
     @track avatar;
     @track url;
     @track namee;
@@ -72,6 +72,4 @@ export default class SimpleApiComponent extends LightningElement {
     get getTwitchUrl(){
         return this.twitch_url;
     }
-
-
 }
